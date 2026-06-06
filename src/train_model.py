@@ -22,3 +22,12 @@ prediction = model.predict(
 )
 
 print("Predicted Risk:", round(prediction[0], 2))
+
+import joblib
+from pathlib import Path
+
+model_path = Path(__file__).parent.parent / "models" / "risk_model.pkl"
+
+joblib.dump(model, model_path)
+
+print("Model saved to:", model_path)
