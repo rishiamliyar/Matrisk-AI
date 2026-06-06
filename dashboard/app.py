@@ -6,6 +6,8 @@ import sys
 from pathlib import Path
 # pyrefly: ignore [missing-import]
 from src.asset_risk import asset_multiplier
+# pyrefly: ignore [missing-import]
+from src.shock_simulator import shock_event
 
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root / "src"))
@@ -109,3 +111,19 @@ chart_df = pd.DataFrame({
 })
 
 st.bar_chart(chart_df.set_index("Metric"))
+
+event = st.selectbox(
+    "Shock Event",
+    [
+        "No Event",
+        "Steel Price Spike",
+        "Corrosion Failure",
+        "Supply Chain Disruption",
+        "Natural Disaster"
+    ]
+)
+shock_risk = shock_event(event, portfolio_risk)
+st.metric(
+    "Shock Adjusted Risk",
+    round(shock_risk, 2)
+)
