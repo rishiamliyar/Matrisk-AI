@@ -1,6 +1,11 @@
 Material,Strength,Corrosion
 Steel,85,10
+Steel,82,12
+Steel,90,8
+Steel,78,15
 Aluminum,70,5
-Copper,60,20
+Aluminum,68,7
 Titanium,95,2
+Titanium,92,4
+Copper,60,20
 Concrete,50,15

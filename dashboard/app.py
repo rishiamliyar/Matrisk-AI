@@ -2,6 +2,13 @@ import streamlit as st
 import pandas as pd
 import joblib
 from pathlib import Path
+import sys
+from pathlib import Path
+
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root / "src"))
+
+from src.esg_risk import esg_score
 
 # Load model
 model_path = Path(__file__).parent.parent / "models" / "risk_model.pkl"
@@ -30,11 +37,18 @@ input_data = pd.DataFrame({
 })
 
 predicted_risk = model.predict(input_data)[0]
+esg = esg_score(material)
+
+portfolio_risk = (
+    predicted_risk + (100 - esg)
+) / 2
 
 col1, col2 = st.columns(2)
 
 with col1:
     st.metric("Predicted Risk", round(predicted_risk, 2))
+    st.metric("ESG Score", esg)
+    st.metric("Portfolio Risk", round(portfolio_risk, 2))
 
 with col2:
     if predicted_risk < 20:
